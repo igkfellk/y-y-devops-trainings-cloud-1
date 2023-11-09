@@ -43,8 +43,8 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: cr.yandex
-          username: ${{ secrets.username }}
-          password: ${{ secrets.password }}
+          username: ${{ secrets.UNAME }}
+          password: ${{ secrets.PASS }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
