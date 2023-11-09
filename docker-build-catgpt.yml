@@ -18,8 +18,8 @@ jobs:
           echo "$YANDEX_CLOUD_SERVICE_ACCOUNT_KEY" | yc auth login --service-account-key -
           docker login -u jsonkey -p "$(yc registry get-credentials)" cr.yandex/crp3b70hbcrvtbg25qbk
           docker push cr.yandex/crp3b70hbcrvtbg25qbk/ikfellkcatgpt
-      env:
-        YANDEX_CLOUD_SERVICE_ACCOUNT_KEY: ${{ secrets.YANDEX_CLOUD_SERVICE_ACCOUNT_KEY }}
+        env:
+          YANDEX_CLOUD_SERVICE_ACCOUNT_KEY: ${{ secrets.YANDEX_CLOUD_SERVICE_ACCOUNT_KEY }}
       - name: Deploy to Yandex.Cloud
         run: |
           yc compute container create --name ikfellkcatgpt --image cr.yandex/crp3b70hbcrvtbg25qbk/ikfellkcatgpt --format json
