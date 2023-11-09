@@ -22,4 +22,4 @@ jobs:
         YANDEX_CLOUD_SERVICE_ACCOUNT_KEY: ${{ secrets.YANDEX_CLOUD_SERVICE_ACCOUNT_KEY }}
       - name: Deploy to Yandex.Cloud
         run: |
-          yc compute container create --name registry-ikfellk --image cr.yandex/crp3b70hbcrvtbg25qbk/ikfellkcatgpt --format json
+          yc compute container create --name ikfellk --image cr.yandex/crp3b70hbcrvtbg25qbk/ikfellkcatgpt --format json
