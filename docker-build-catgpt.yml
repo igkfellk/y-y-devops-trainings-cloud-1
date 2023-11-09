@@ -1,25 +1,56 @@
-name: Docker Build and Push
+name: docker-build
+
 on:
-  push:
-    branches:
-      - main  # указывает на основную ветку вашего репозитория
+  workflow_call:
+    inputs:
+      app-name:
+        required: true
+        type: string
+    secrets:
+      username:
+        required: true
+      password:
+        required: true
+    outputs:
+      app-version:
+        value: ${{ jobs.build.outputs.app-version }}
 
 jobs:
-  build-and-push:
+  build:
+    name: Docker image
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      app-version: ${{ steps.meta.outputs.version }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Login to Yandex Cloud Registry
-#        run: yc registry login
-        run: |
-          echo "$YANDEX_CLOUD_SERVICE_ACCOUNT_KEY" | yc auth login --service-account-key -
-          docker login -u jsonkey -p "$(yc registry get-credentials)" $YANDEX_CLOUD_REGISTRY_URL
-        env:
-          YANDEX_CLOUD_SERVICE_ACCOUNT_KEY: ${{ secrets.YANDEX_CLOUD_SERVICE_ACCOUNT_KEY }}
-          YANDEX_CLOUD_REGISTRY_URL: ${{ secrets.YANDEX_CLOUD_REGISTRY_URL }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: cr.yandex/crp3b70hbcrvtbg25qbk/${{ inputs.app-name }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+
+      - name: Log into Docker Hub
+        uses: docker/login-action@v3
+        with:
+          registry: cr.yandex
+          username: ${{ secrets.username }}
+          password: ${{ secrets.password }}
+
       - name: Build and push Docker image
-        run: |
-          docker buildx build --platform linux/amd64,linux/arm64 -t cr.yandex/crp3b70hbcrvtbg25qbk/ikfellkcatgpt:v1 . --push
+        uses: docker/build-push-action@v3
+        with:
+          file: ./Dockerfile
+          context: ./catgpt
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
