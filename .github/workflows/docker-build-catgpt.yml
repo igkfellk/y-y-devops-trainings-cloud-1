@@ -15,5 +15,5 @@ jobs:
         run: docker login -u ${{ secrets.YANDEX_USERNAME }} -p ${{ secrets.YANDEX_CLOUD_SERVICE_ACCOUNT_KEY }}  cr.yandex/crp3b70hbcrvtbg25qbk
       - name: Build and push Docker image
         run: |
-          docker build -t cr.yandex/crp3b70hbcrvtbg25qbk/ikfellkcatgpt:v1 -f ./catgpt
-          docker push cr.yandex/crp3b70hbcrvtbg25qbk/ikfellkcatgpt
+          docker build -t cr.yandex/crp3b70hbcrvtbg25qbk/ikfellk/catgpt:v1 ./catgpt
+          docker push cr.yandex/crp3b70hbcrvtbg25qbk/ikfellk/catgpt:v1
