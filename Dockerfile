@@ -26,5 +26,8 @@ FROM gcr.io/distroless/static-debian12:latest-amd64
 # Копируем собранный бинарный файл из builder образа
 COPY --from=builder /go/bin/app /go/bin/app
 
+# Говорим что нужно слушать порт 8080
+EXPOSE 8080
+
 # Определяем команду, которая будет запускаться при запуске контейнера
 CMD ["/go/bin/app"]
