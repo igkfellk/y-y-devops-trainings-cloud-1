@@ -8,7 +8,7 @@ MAINTAINER Igor Kucherenko <i.kucherenko@test.ru>
 WORKDIR /go/src/app
 
 # Копируем go.mod и go.sum для загрузки зависимостей
-COPY go.mod go.sum ./
+COPY go.mod go.sum /catgpt
 
 # Загружаем зависимости
 RUN go mod download
