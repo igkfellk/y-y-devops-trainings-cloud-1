@@ -1,8 +1,9 @@
 name: Publish Docker image
 
 on:
-  release:
-    types: [tag]
+  push:
+    tags:
+      - '*'  # Любой тег
 
 jobs:
   push_to_registry:
