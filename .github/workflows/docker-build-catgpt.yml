@@ -2,8 +2,8 @@ name: Docker Build and Deploy catgpt
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - '*'  # Любой тег
 
 jobs:
   build-and-deploy:
