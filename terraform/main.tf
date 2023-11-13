@@ -26,7 +26,7 @@ resource "yandex_container_registry" "ikfellk-registry" {
 }
 
 locals {
-  folder_id = "<INSERT YOUR FOLDER ID>"
+  folder_id = "b1g2pc0k58hhgcmk8081"
   service-accounts = toset([
     "test-1",
     "test-2",
