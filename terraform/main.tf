@@ -28,10 +28,10 @@ resource "yandex_container_registry" "ikfellk-registry" {
 locals {
   folder_id = "<INSERT YOUR FOLDER ID>"
   service-accounts = toset([
-    "test",
+    "test-1",
     "test-2",
   ])
-  test-roles = toset([
+  test-1-roles = toset([
     "container-registry.images.puller",
     "monitoring.editor",
   ])
@@ -47,10 +47,10 @@ resource "yandex_iam_service_account" "service-accounts" {
   for_each = local.service-accounts
   name     = "${local.folder_id}-${each.key}"
 }
-resource "yandex_resourcemanager_folder_iam_member" "test-roles" {
-  for_each  = local.test-roles
+resource "yandex_resourcemanager_folder_iam_member" "test-1-roles" {
+  for_each  = local.test-1-roles
   folder_id = local.folder_id
-  member    = "serviceAccount:${yandex_iam_service_account.service-accounts["test"].id}"
+  member    = "serviceAccount:${yandex_iam_service_account.service-accounts["test-1"].id}"
   role      = each.key
 }
 resource "yandex_resourcemanager_folder_iam_member" "test-2-roles" {
@@ -86,7 +86,7 @@ resource "yandex_compute_instance_group" "catgpt" {
   }
   instance_template {
     platform_id        = "standard-v2"
-    service_account_id = yandex_iam_service_account.service-accounts["test"].id
+    service_account_id = yandex_iam_service_account.service-accounts["test-1"].id
     resources {
       cores         = 2
       memory        = 1
