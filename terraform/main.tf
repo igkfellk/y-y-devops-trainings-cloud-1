@@ -112,7 +112,7 @@ resource "yandex_compute_instance_group" "catgpt" {
         "${path.module}/docker-compose.yaml",
         {
           folder_id   = "${local.folder_id}",
-          registry_id = "${yandex_container_registry.registry1.id}",
+          registry_id = "${yandex_container_registry.ikfellk-registry.id}",
         }
       )
       user-data = file("${path.module}/cloud-config.yaml")
