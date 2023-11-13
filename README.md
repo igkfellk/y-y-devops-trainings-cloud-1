@@ -1,3 +1,5 @@
+**Подробное описание как выполнял ДЗ лежит тут => https://wiki.fellk.ru/doku.php/devops_training_in_yandex/devops-trainings-cloud-1**
+
 # DevOps-тренировки в Яндексе
 Домашнее задание для DevOps-тренировок в Яндексе, лекция "Облако. Кто виноват и что делать."
 
