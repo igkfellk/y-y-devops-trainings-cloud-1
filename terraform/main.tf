@@ -41,6 +41,7 @@ locals {
     "load-balancer.admin",
     "vpc.publicAdmin",
     "vpc.user",
+    "container-registry.images.pusher",
   ])
 }
 resource "yandex_iam_service_account" "service-accounts" {
